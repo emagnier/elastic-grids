@@ -1,18 +1,23 @@
 # Elastic Grids
 
-:arrow_right: Fully customizable and responsive CSS Grids with Sass.<br />
-:arrow_right: Give you a set of CSS helper classes for dealing with widths/proportions.<br />
-:arrow_right: Only enable what you needs. Keep control on the generated CSS.
+> - Fully customizable and responsive CSS Grids with Sass.
+> - Give you a set of CSS helper classes for dealing with widths/proportions.
+> - Only enable what you needs. Keep control on the generated CSS.
 
 
 ## How it works
 
 Elastic-Grids consist of two types of helpers: 
-- the grid class (`.grid`)
-- widths helpers for all needed proportions (`2/3`, `3/4`, `8/12`...).
+
+#### Grids
+
+The grid class `.grid`
+
+#### Widths
+
+Widths helpers for all needed proportions (`2/3`, `3/4`, `8/12`...).
 
 _[More documentation coming soon...]_
-
 
 ## Installation
 
