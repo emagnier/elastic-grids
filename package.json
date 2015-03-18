@@ -1,0 +1,23 @@
+{
+  "name": "elastic-grids",
+  "version": "0.4.0",
+  "description": "Fully customizable and responsive CSS Grids with Sass. And give you a set of CSS helper classes for dealing with widths.",
+  "homepage": "https://github.com/emagnier/elastic-grids",
+  "main": "_elastic-grids.scss",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/emagnier/elastic-grids.git"
+  },
+  "authors": [
+    "Etienne Magnier <etienne.magnier@gmail.com>"
+  ],
+  "keywords": [
+    "oocss",
+    "css",
+    "width",
+    "widths",
+    "grids",
+    "grid"
+  ],
+  "license": "BSD"
+}
