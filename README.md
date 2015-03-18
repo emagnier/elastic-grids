@@ -1,7 +1,8 @@
 # Elastic Grids
 
-Fully customizable and responsive CSS Grids with Sass.<br />
-It also give you a set of CSS helper classes for dealing with widths/proportions.
+:arrow_right: Fully customizable and responsive CSS Grids with Sass.<br />
+:arrow_right: Give you a set of CSS helper classes for dealing with widths/proportions.<br />
+:arrow_right: Only enable what you needs. Keep control on the generated CSS.
 
 
 ## How it works
