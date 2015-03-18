@@ -2,200 +2,207 @@
 // CSS Grid & Widths generator, by @EtienneMagnier
 //
 // Licence: BSD
-// github.com/emagnier/elastic-grids
+// github.com/emagnier/holdup
 
 
-//------------------------------------
-//    GRID
-//------------------------------------
+$elasticgrid-included: false !default;
+
+@if not $elasticgrid-included {
+  $elasticgrid-included: true;
 
 
-$elasticgrid-use-grids: false !default;
-$elasticgrid-grid-class-name: grid !default;
-$elasticgrid-reset-font-family: sans-serif !default;
-$elasticgrid-widths-custom-selector: null !default;
+  //------------------------------------
+  //    GRID
+  //------------------------------------
 
 
-@if $elasticgrid-use-grids == true {
-
-  /**
-   * Grid.
-   */
-
-  .#{$elasticgrid-grid-class-name} {
-    letter-spacing: -0.31em;        // Webkit: collapse white-space between units
-    *letter-spacing: normal;        // reset IE < 8
-    *word-spacing: -0.43em;         // IE < 8: collapse white-space between units
-    text-rendering: optimizespeed;  // Webkit: fixes text-rendering: optimizeLegibility
-
-    // Sets the font stack to fonts known to work properly with the above letter
-    // and word spacings. See: https://github.com/yahoo/pure/issues/41/
-    //
-    //
-    // The following font stack makes Pure Grids work on all known environments.
-    //
-    // * FreeSans: Ships with many Linux distros, including Ubuntu
-    //
-    // * Arimo: Ships with Chrome OS. Arimo has to be defined before Helvetica and
-    //   Arial to get picked up by the browser, even though neither is available
-    //   in Chrome OS.
-    //
-    // * Droid Sans: Ships with all versions of Android.
-    //
-    // * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.
-
-    font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+  $elasticgrid-use-grids: false !default;
+  $elasticgrid-grid-class-name: grid !default;
+  $elasticgrid-reset-font-family: sans-serif !default;
+  $elasticgrid-widths-custom-selector: null !default;
 
 
-    // Use flexbox when possible to avoid `letter-spacing` side-effects.
-    //
-    // NOTE: Firefox (as of 25) does not currently support flex-wrap, so the
-    // `-moz-` prefix version is omitted.
-
-    display: -webkit-flex;
-    -webkit-flex-flow: row wrap;
-
-    // IE10 uses display: flexbox
-    display: -ms-flexbox;
-    -ms-flex-flow: row wrap;
-
-    // Prevents distributing space between rows
-    -ms-align-content: flex-start;
-    -webkit-align-content: flex-start;
-    align-content: flex-start;
-  }
-
-  %holdup-unit {
-    display: inline-block;
-    *display: inline; // IE < 8: fake inline-block
-    zoom: 1;
-    letter-spacing: normal;
-    word-spacing: normal;
-    vertical-align: top;
-    text-rendering: auto;
-
-    // Resets the font family back to the OS/browser's default sans-serif font,
-    // this the same font stack that Normalize.css sets for the `body`.
-
-    .#{$elasticgrid-grid-class-name} & {
-      font-family: $elasticgrid-reset-font-family;
-    }
-  }
-
-  @if $elasticgrid-widths-custom-selector != null {
-    #{$elasticgrid-widths-custom-selector} {
-      @extend %holdup-unit;
-    }
-  }
-}
-
-
-//------------------------------------
-//    WIDTHS-GENERATOR
-//------------------------------------
-
-
-// Generate a series of width helper classes that you can use to size things
-// like grid systems. Classes can take a fraction-like format (e.g. `.2/3`)
-// or a spoken-word format (e.g. `two-thirds`). Toggle formats by overriding
-// the `$elasticgrid-use-fractions` variable defined below.
-
-
-// Predefine the variables below in order to alter and enable specific features.
-$elasticgrid-widths:           1 2 3 4 5 6 8 9 10 12 !default;
-$elasticgrid-use-fractions:    true !default;
-$elasticgrid-widths-parts-map: (
-  1:  One,
-  2:  Two,
-  3:  Three,
-  4:  Four,
-  5:  Five,
-  6:  Six,
-  7:  Seven,
-  8:  Height,
-  9:  Nine,
-  10: Ten,
-  11: Eleven,
-  12: Twelve,
-  13: Thirteen,
-  14: Fourteen,
-  15: Fifteen
-) !default;
-$elasticgrid-widths-wholes-map: (
-  1:  Whole,
-  2:  Half,
-  3:  Third,
-  4:  Quarter,
-  5:  Fifth,
-  6:  Sixth,
-  7:  Seventh,
-  8:  Eighth,
-  9:  Ninth,
-  10: Tenth,
-  11: Eleventh,
-  12: Twelfth,
-  13: Thirteenth,
-  14: Fourteenth,
-  15: Fifteenth,
-  16: Sixteenth
-) !default;
-
-
-@mixin holdup-widths($wholes: $elasticgrid-widths, $prefix: "", $suffix: "") {
-  $elasticgrid-widths-base-selectors: () !default !global;
-
-  @each $whole in $wholes {
-    $part: 1;
+  @if $elasticgrid-use-grids == true {
 
     /**
-     * #{map-get($elasticgrid-widths-wholes-map, $whole) or $whole + th}.
+     * Grid.
      */
 
-    @while $part < $whole or ($whole == $part and $part == 1) {
-      $part-selector: #{$part};
-      $whole-selector: #{$whole};
-      $width: $part / $whole * 100 + "%";
-      $selector: '[class~="#{$prefix}#{$part-selector}/#{$whole-selector}#{$suffix}"]';
+    .#{$elasticgrid-grid-class-name} {
+      letter-spacing: -0.31em;        // Webkit: collapse white-space between units
+      *letter-spacing: normal;        // reset IE < 8
+      *word-spacing: -0.43em;         // IE < 8: collapse white-space between units
+      text-rendering: optimizespeed;  // Webkit: fixes text-rendering: optimizeLegibility
 
-      // Use spoken-words & check if the corresponding word exists in $elasticgrid-widths-wholes-map.
-      @if $elasticgrid-use-fractions == false {
-        @if map-get($elasticgrid-widths-wholes-map, $whole) != null and map-get($elasticgrid-widths-parts-map, $part) != null {
-          $part-selector: #{to-lower-case(map-get($elasticgrid-widths-parts-map, $part))};
-          $whole-selector: #{to-lower-case(map-get($elasticgrid-widths-wholes-map, $whole))};
+      // Sets the font stack to fonts known to work properly with the above letter
+      // and word spacings. See: https://github.com/yahoo/pure/issues/41/
+      //
+      //
+      // The following font stack makes Pure Grids work on all known environments.
+      //
+      // * FreeSans: Ships with many Linux distros, including Ubuntu
+      //
+      // * Arimo: Ships with Chrome OS. Arimo has to be defined before Helvetica and
+      //   Arial to get picked up by the browser, even though neither is available
+      //   in Chrome OS.
+      //
+      // * Droid Sans: Ships with all versions of Android.
+      //
+      // * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.
 
-          // Pluralize the selector
-          @if $part > 1 {
-            $whole-selector: $whole-selector + 's';
+      font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+
+
+      // Use flexbox when possible to avoid `letter-spacing` side-effects.
+      //
+      // NOTE: Firefox (as of 25) does not currently support flex-wrap, so the
+      // `-moz-` prefix version is omitted.
+
+      display: -webkit-flex;
+      -webkit-flex-flow: row wrap;
+
+      // IE10 uses display: flexbox
+      display: -ms-flexbox;
+      -ms-flex-flow: row wrap;
+
+      // Prevents distributing space between rows
+      -ms-align-content: flex-start;
+      -webkit-align-content: flex-start;
+      align-content: flex-start;
+    }
+
+    %holdup-unit {
+      display: inline-block;
+      *display: inline; // IE < 8: fake inline-block
+      zoom: 1;
+      letter-spacing: normal;
+      word-spacing: normal;
+      vertical-align: top;
+      text-rendering: auto;
+
+      // Resets the font family back to the OS/browser's default sans-serif font,
+      // this the same font stack that Normalize.css sets for the `body`.
+
+      .#{$elasticgrid-grid-class-name} & {
+        font-family: $elasticgrid-reset-font-family;
+      }
+    }
+
+    @if $elasticgrid-widths-custom-selector != null {
+      #{$elasticgrid-widths-custom-selector} {
+        @extend %holdup-unit;
+      }
+    }
+  }
+
+
+  //------------------------------------
+  //    WIDTHS-GENERATOR
+  //------------------------------------
+
+
+  // Generate a series of width helper classes that you can use to size things
+  // like grid systems. Classes can take a fraction-like format (e.g. `.2/3`)
+  // or a spoken-word format (e.g. `two-thirds`). Toggle formats by overriding
+  // the `$elasticgrid-use-fractions` variable defined below.
+
+
+  // Predefine the variables below in order to alter and enable specific features.
+  $elasticgrid-widths:           1 2 3 4 5 6 8 9 10 12 !default;
+  $elasticgrid-use-fractions:    true !default;
+  $elasticgrid-widths-parts-map: (
+    1:  One,
+    2:  Two,
+    3:  Three,
+    4:  Four,
+    5:  Five,
+    6:  Six,
+    7:  Seven,
+    8:  Height,
+    9:  Nine,
+    10: Ten,
+    11: Eleven,
+    12: Twelve,
+    13: Thirteen,
+    14: Fourteen,
+    15: Fifteen
+  ) !default;
+  $elasticgrid-widths-wholes-map: (
+    1:  Whole,
+    2:  Half,
+    3:  Third,
+    4:  Quarter,
+    5:  Fifth,
+    6:  Sixth,
+    7:  Seventh,
+    8:  Eighth,
+    9:  Ninth,
+    10: Tenth,
+    11: Eleventh,
+    12: Twelfth,
+    13: Thirteenth,
+    14: Fourteenth,
+    15: Fifteenth,
+    16: Sixteenth
+  ) !default;
+
+
+  @mixin holdup-widths($wholes: $elasticgrid-widths, $prefix: "", $suffix: "") {
+    $elasticgrid-widths-base-selectors: () !default !global;
+
+    @each $whole in $wholes {
+      $part: 1;
+
+      /**
+       * #{map-get($elasticgrid-widths-wholes-map, $whole) or $whole + th}.
+       */
+
+      @while $part < $whole or ($whole == $part and $part == 1) {
+        $part-selector: #{$part};
+        $whole-selector: #{$whole};
+        $width: $part / $whole * 100 + "%";
+        $selector: '[class~="#{$prefix}#{$part-selector}/#{$whole-selector}#{$suffix}"]';
+
+        // Use spoken-words & check if the corresponding word exists in $elasticgrid-widths-wholes-map.
+        @if $elasticgrid-use-fractions == false {
+          @if map-get($elasticgrid-widths-wholes-map, $whole) != null and map-get($elasticgrid-widths-parts-map, $part) != null {
+            $part-selector: #{to-lower-case(map-get($elasticgrid-widths-parts-map, $part))};
+            $whole-selector: #{to-lower-case(map-get($elasticgrid-widths-wholes-map, $whole))};
+
+            // Pluralize the selector
+            @if $part > 1 {
+              $whole-selector: $whole-selector + 's';
+            }
+
+            $selector: '.#{$prefix}#{$part-selector}-#{$whole-selector}#{$suffix}';
           }
 
-          $selector: '.#{$prefix}#{$part-selector}-#{$whole-selector}#{$suffix}';
+          @else {
+            @warn $whole + " is an undefined spoken-word width in Outline.";
+          }
         }
 
+        // First uses of a specific width.
+        @if map-get($elasticgrid-widths-base-selectors, #{$prefix} + $width + #{$suffix}) == null {
+          $elasticgrid-widths-base-selectors: map-merge($elasticgrid-widths-base-selectors, (#{$prefix} + $width + #{$suffix}: $selector)) !global;
+          #{$selector} {
+            width: #{$width} !important;
+
+            @if $elasticgrid-use-grids == true and $elasticgrid-widths-custom-selector == null {
+              @extend %holdup-unit;
+            }
+          }
+        }
+
+        // Extend a previous selector which has the same width property.
         @else {
-          @warn $whole + " is an undefined spoken-word width in Outline.";
-        }
-      }
-
-      // First uses of a specific width.
-      @if map-get($elasticgrid-widths-base-selectors, #{$prefix} + $width + #{$suffix}) == null {
-        $elasticgrid-widths-base-selectors: map-merge($elasticgrid-widths-base-selectors, (#{$prefix} + $width + #{$suffix}: $selector)) !global;
-        #{$selector} {
-          width: #{$width} !important;
-
-          @if $elasticgrid-use-grids == true and $elasticgrid-widths-custom-selector == null {
-            @extend %holdup-unit;
+          #{$selector} {
+            @extend #{map-get($elasticgrid-widths-base-selectors, #{$prefix} + $width + #{$suffix})};
           }
         }
-      }
 
-      // Extend a previous selector which has the same width property.
-      @else {
-        #{$selector} {
-          @extend #{map-get($elasticgrid-widths-base-selectors, #{$prefix} + $width + #{$suffix})};
-        }
+        $part: $part + 1;
       }
-
-      $part: $part + 1;
     }
   }
 }

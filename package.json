@@ -1,6 +1,6 @@
 {
   "name": "elastic-grids",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Fully customizable and responsive CSS Grids with Sass. And give you a set of CSS helper classes for dealing with widths.",
   "homepage": "https://github.com/emagnier/elastic-grids",
   "main": "_elastic-grids.scss",
