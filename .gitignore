@@ -1,4 +1,5 @@
 .sass-cache
 *.css
+*.map
 bower_components/
 test.scss
